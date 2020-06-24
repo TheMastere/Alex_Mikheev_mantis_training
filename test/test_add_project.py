@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import pytest
-from project import Project
-from application import Application
+from model.project import Project
+from fixture.application import Application
 
 
 @pytest.fixture
@@ -12,7 +12,7 @@ def app(request):
 
 
 def test_add_project(app):
-    app.login(username="administrator", password="root")
+    app.session.login(username="administrator", password="root")
     app.create_project(Project(name="myprojectred", description="gawgjkawgjoawgioawgjkaknkgwgwg"))
-    app.logout()
+    app.session.logout()
 

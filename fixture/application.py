@@ -1,33 +1,47 @@
 from selenium import webdriver
 from fixture.session import SessionHelper
 
-
 class Application:
 
-    def __init__(self, browser, base_url):
-        if browser == "Firefox":
-            self.wd = webdriver.Firefox()
-        elif browser == "Chrome":
-            self.wd = webdriver.Chrome()
-        elif browser == "Ie":
-            self.wd = webdriver.Ie()
-        else:
-            raise ValueError("Unrecognized browser %s" % browser)
-        self.wd.implicitly_wait(1)
+    def __init__(self):
+        self.wd = webdriver.Firefox()
+        self.wd.implicitly_wait(30)
         self.session = SessionHelper(self)
-        self.base_url = base_url
 
-    def is_valid(self):
-        try:
-            self.wd.current_url
-            return True
-        except:
-            return False
-
-    def open_home_page(self):
+    def open_login_page(self):
         wd = self.wd
         wd.get("http://localhost/mantisbt-1.2.20/login_page.php")
-        wd.get(self.base_url)
+
+    def open_project_page(self):
+        wd = self.wd
+        wd.find_element_by_link_text("Manage").click()
+        wd.find_element_by_link_text("Manage Projects").click()
+
+    def create_project(self, project):
+        wd = self.wd
+        self.open_project_page()
+        wd.find_element_by_xpath("//input[@value='Create New Project']").click()
+        wd.find_element_by_name("name").click()
+        wd.find_element_by_name("name").clear()
+        wd.find_element_by_name("name").send_keys(project.name)
+        wd.find_element_by_name("description").click()
+        wd.find_element_by_name("description").clear()
+        wd.find_element_by_name("description").send_keys(project.description)
+        wd.find_element_by_xpath("//input[@value='Add Project']").click()
+        self.return_projects_page()
+
+    def return_projects_page(self):
+        wd = self.wd
+        wd.find_element_by_link_text("Manage").click()
+        wd.find_element_by_link_text("Manage Projects").click()
 
     def destroy(self):
         self.wd.quit()
+
+
+
+
+
+
+
+
