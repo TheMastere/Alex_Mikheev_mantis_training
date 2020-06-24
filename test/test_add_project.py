@@ -13,6 +13,6 @@ def app(request):
 
 def test_add_project(app):
     app.session.login(username="administrator", password="root")
-    app.create_project(Project(name="myprojectred", description="gawgjkawgjoawgioawgjkaknkgwgwg"))
+    app.project.create(Project(name="myprojectred", description="gawgjkawgjoawgioawgjkaknkgwgwg"))
     app.session.logout()
 
