@@ -10,7 +10,7 @@ class ProjectHelper:
         wd.find_element_by_link_text("Manage").click()
         wd.find_element_by_link_text("Manage Projects").click()
 
-    def create(self, project):
+    def create_project(self, project):
         wd = self.app.wd
         self.open_project_page()
         wd.find_element_by_xpath("//input[@value='Create New Project']").click()
@@ -26,7 +26,7 @@ class ProjectHelper:
         wd = self.app.wd
         self.open_project_page()
         delete_project_list = []
-        proj_name = ["tr.row-1", "tr.row-2"]
+        proj_name = wd.find_elements_by_xpath("//div/div[4]/div[2]/table/tbody/tr")
         for name in proj_name:
             elements = wd.find_elements_by_css_selector(name)
             for element in elements:

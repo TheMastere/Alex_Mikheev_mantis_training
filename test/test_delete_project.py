@@ -7,7 +7,7 @@ def test_delete_project(app):
     old_project = app.project.get_project_list()
     if (len(old_project)) == 0:
         new_project = Project(name="myprojectred", description="gawgjkawgjoawgioawgjkaknkgwgwg")
-        app.project.create(new_project)
+        app.project.create_project(new_project)
         old_project = app.project.get_project_list()
     pr = random.choice(old_project)
     app.project.delete_project_by_name(pr.name)
