@@ -5,11 +5,11 @@ from fixture.project import ProjectHelper
 class Application:
 
     def __init__(self, browser, base_url):
-        if browser == "firefox":
+        if browser == "Firefox":
             self.wd = webdriver.Firefox()
-        elif browser == "chrome":
+        elif browser == "Chrome":
             self.wd = webdriver.Chrome()
-        elif browser == "ie":
+        elif browser == "Ie":
             self.wd = webdriver.Ie()
         else:
             raise ValueError("Unrecognized browser %s" % browser)
