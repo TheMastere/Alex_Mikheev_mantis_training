@@ -26,17 +26,11 @@ class ProjectHelper:
         wd = self.app.wd
         self.open_project_page()
         delete_project_list = []
-        proj_name = wd.find_elements_by_xpath("//div/div[4]/div[2]/table/tbody/tr")
-        for name in proj_name:
-            elements = wd.find_elements_by_css_selector(name)
-            for element in elements:
-                cells = element.find_elements_by_css_selector("td")
-                address = cells[0].find_element_by_tag_name("a").get_attribute("href")
-                project_name = cells[0].text
-                pr = address.index("=")
-                project_id = address[pr+1:len(address)]
-                project_description = cells[4].text
-                delete_project_list.append(Project(id=project_id, name=project_name, description=project_description))
+        for row in wd.find_elements_by_css_selector("table.width100 tr[class='row-1']") +\
+                    wd.find_elements_by_css_selector("table.width100 tr[class='row-2']"):
+            name = row.find_elements_by_css_selector("td")[0].text
+            description = row.find_elements_by_css_selector("td")[4].text
+            delete_project_list.append(Project(name=name, description=description))
         return delete_project_list
 
     def return_projects_page(self):
@@ -51,7 +45,7 @@ class ProjectHelper:
         wd.find_element_by_xpath("//input[@value='Delete Project']").click()
         wd.find_element_by_xpath("//input[@value='Delete Project']").click()
 
-    def project_list(self, prj, prj_list):
+    def project_is_in_list(self, prj, prj_list):
         for pr in prj_list:
             if pr.name == prj.name:
                 return True
