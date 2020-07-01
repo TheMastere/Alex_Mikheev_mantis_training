@@ -24,7 +24,7 @@ class MailHelper:
                         pop.quit()
                         return msg.get_payload()
             pop.close()
-            time.sleep(4)
+            time.sleep(10)
         return None
 
 
